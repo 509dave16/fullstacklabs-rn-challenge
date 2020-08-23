@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet } from "react-native";
+import { Heading } from "material-bread";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Node from "../components/Node";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions/nodes";
-import Node from "../components/Node";
-import { Heading } from "material-bread";
 
 export class Nodes extends React.Component {
   constructor(props) {
@@ -29,19 +31,22 @@ export class Nodes extends React.Component {
   render() {
     const { nodes } = this.props;
     return (
-      <View>
+      <SafeAreaView>
         <Heading style={styles.heading} type={4}>
           Nodes
         </Heading>
-        {nodes.list.map(node => (
-          <Node
-            node={node}
-            key={node.url}
-            expanded={node.url === this.state.expandedNodeURL}
-            toggleNodeExpanded={this.toggleNodeExpanded}
-          />
-        ))}
-      </View>
+        <ScrollView>
+          {nodes.list.map(node => (
+            <Node
+              node={node}
+              key={node.url}
+              expanded={node.url === this.state.expandedNodeURL}
+              toggleNodeExpanded={this.toggleNodeExpanded}
+            />
+          ))}
+          <View style={styles.paddingBump} />
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
@@ -51,7 +56,8 @@ Nodes.propTypes = {
   nodes: PropTypes.object.isRequired
 };
 const styles = StyleSheet.create({
-  heading: { marginLeft: 30, marginTop: 45, fontWeight: "700" }
+  heading: { marginLeft: 30, marginTop: 45, marginBottom: 15, fontWeight: "700" },
+  paddingBump: { paddingBottom: 80 }
 });
 
 function mapStateToProps(state) {

@@ -5,17 +5,20 @@ import {BreadProvider} from 'material-bread';
 import RootStack from './navigation';
 import configureStore from './store';
 import {NavigationContainer} from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const {store} = configureStore();
 
 const App = () => (
-  <Provider store={store}>
-    <NavigationContainer>
-      <BreadProvider>
-        <RootStack />
-      </BreadProvider>
-    </NavigationContainer>
-  </Provider>
+  <SafeAreaProvider>
+    <Provider store={store}>
+      <NavigationContainer>
+        <BreadProvider>
+          <RootStack />
+        </BreadProvider>
+      </NavigationContainer>
+    </Provider>
+  </SafeAreaProvider>
 );
 
 export default App;
